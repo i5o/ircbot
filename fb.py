@@ -1,9 +1,5 @@
-#-*-coding:utf-8-*-
+# -*-coding:utf-8-*-
 import sys
-import logging
-import gobject
-import getpass
-from optparse import OptionParser
 import sleekxmpp
 from chatterbotapi import ChatterBotFactory, ChatterBotType
 import logging
