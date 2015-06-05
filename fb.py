@@ -12,7 +12,7 @@ user = sys.argv[1] + "@chat.facebook.com"
 password = sys.argv[2]
 factory = ChatterBotFactory()
 sessions = {}
-
+dont_send = ["-100006269893916@chat.facebook.com"]
 
 class EchoBot(sleekxmpp.ClientXMPP):
 
@@ -27,6 +27,8 @@ class EchoBot(sleekxmpp.ClientXMPP):
         self.get_roster()
 
     def message(self, msg):
+        if msg['from'] in dont_send:
+            return
         if str(msg['body']) not in sessions:
             sessions[
                 str(msg['from'])] = [
