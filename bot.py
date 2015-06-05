@@ -31,6 +31,7 @@ class GCIBot(irc.IRCClient):
         self.channels.append(channel)
 
     def privmsg(self, user, channel, msg):
+        user_ = user.split('!', 1)[0]
         isForMe = msg.startswith(
             self.nickname +
                ":") or msg.startswith(
@@ -46,9 +47,14 @@ class GCIBot(irc.IRCClient):
                         'b0dafd24ee35a477')]
             sessions[channel].append(sessions[channel][0].create_session())
 
+        
         if not isForMe:
             return
-        self.msg(channel, str(sessions[channel][1].think(str(msg))))
+
+        if msg[msg.find(self.nickname):] == "the msg":
+            self.msg(channel, "%s, blabla" % user_)
+        else:
+            self.msg(channel, str(sessions[channel][1].think(str(msg))))
 
     def alterCollidedNick(self, nickname):
         return '_' + nickname + '_'
