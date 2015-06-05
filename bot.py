@@ -51,7 +51,7 @@ class GCIBot(irc.IRCClient):
         if not isForMe:
             return
 
-        if msg[msg.find(self.nickname):] == "the msg":
+        if msg[len(self.nickname) + 2:] == "the msg":
             self.msg(channel, "%s, blabla" % user_)
         else:
             self.msg(channel, str(sessions[channel][1].think(str(msg))))
