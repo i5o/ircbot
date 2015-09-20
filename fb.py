@@ -12,6 +12,7 @@ user = sys.argv[1] + "@chat.facebook.com"
 password = sys.argv[2]
 sessions = {}
 dont_send = []
+only_send = ["-100002319169411@chat.facebook.com"]
 
 
 class EchoBot(sleekxmpp.ClientXMPP):
@@ -29,6 +30,10 @@ class EchoBot(sleekxmpp.ClientXMPP):
     def message(self, msg):
         str_from = str(msg['from'])
         str_body = str(msg['body'])
+
+        if len(only_send) > 0:
+            if str_from not in only_send:
+                return
 
         if str_from in dont_send:
             return
