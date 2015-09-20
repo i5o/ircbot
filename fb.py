@@ -27,13 +27,17 @@ class EchoBot(sleekxmpp.ClientXMPP):
         self.get_roster()
 
     def message(self, msg):
+        str_from = str(msg['from'])
+        str_body = str(msg['body'])
+
         if msg['from'] in dont_send:
             return
-        if str(msg['body']) not in sessions:
-            sessions[str(msg['from'])] = cleverbot.Cleverbot()
-        print str(msg['body'])
-        msg_back = str(sessions[str(msg['from'])].ask(str(msg['body'])))
-        print msg_back
+
+        if str_body not in sessions:
+            sessions[str_from] = cleverbot.Cleverbot()
+
+        msg_back = str(sessions[str_from].ask(str_body))
+
         self.send_message(
             mto=msg['from'],
             mbody=msg_back)
@@ -46,8 +50,4 @@ if __name__ == "__main__":
     xmpp.register_plugin('xep_0199')  # xmpp ping
 
     if xmpp.connect():
-        print("xmpp start")
         xmpp.process(threaded=False)
-        print("Done")
-    else:
-        print("unable to connected")
