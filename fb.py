@@ -1,7 +1,7 @@
 # -*-coding:utf-8-*-
 import sys
 import sleekxmpp
-from chatterbotapi import ChatterBotFactory, ChatterBotType
+import cleverbot
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -10,9 +10,9 @@ sys.setdefaultencoding('utf8')
 
 user = sys.argv[1] + "@chat.facebook.com"
 password = sys.argv[2]
-factory = ChatterBotFactory()
 sessions = {}
-dont_send = ["-100006269893916@chat.facebook.com"]
+dont_send = []
+
 
 class EchoBot(sleekxmpp.ClientXMPP):
 
@@ -30,17 +30,13 @@ class EchoBot(sleekxmpp.ClientXMPP):
         if msg['from'] in dont_send:
             return
         if str(msg['body']) not in sessions:
-            sessions[
-                str(msg['from'])] = [
-                    factory.create(
-                        ChatterBotType.PANDORABOTS,
-                        'b0dafd24ee35a477')]
-            sessions[str(msg['from'])].append(
-                sessions[str(msg['from'])][0].create_session())
+            sessions[str(msg['from'])] = cleverbot.Cleverbot()
         print str(msg['body'])
+        msg_back = str(sessions[str(msg['from'])].ask(str(msg['body'])))
+        print msg_back
         self.send_message(
             mto=msg['from'],
-            mbody=str(sessions[str(msg['from'])][1].think(str(msg['body']))))
+            mbody=msg_back)
 
 if __name__ == "__main__":
     xmpp = EchoBot(user, password)
