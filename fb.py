@@ -44,8 +44,10 @@ class EchoBot(sleekxmpp.ClientXMPP):
 
         msg_back = str(sessions[str_from].ask(str_body))
 
+        print "Msg come"
         while self.check_spam(msg_back):
             msg_back = str(sessions[str_from].ask(str_body))
+            print "While, while, while"
 
         print "\n>>> %s\n >>>> %s\n" % (str_body, msg_back)
 
