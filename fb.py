@@ -13,6 +13,7 @@ password = sys.argv[2]
 sessions = {}
 dont_send = []
 only_send = ["-100002319169411@chat.facebook.com"]
+spam = ["ios", "app!", "clever", "free"]
 
 
 class EchoBot(sleekxmpp.ClientXMPP):
@@ -42,12 +43,20 @@ class EchoBot(sleekxmpp.ClientXMPP):
             sessions[str_from] = cleverbot.Cleverbot()
 
         msg_back = str(sessions[str_from].ask(str_body))
-        while "Clever" in msg_back:
+
+        while self.check_spam(msg_back):
             msg_back = str(sessions[str_from].ask(str_body))
 
         self.send_message(
             mto=str_from,
             mbody=msg_back)
+
+    def check_spam(self, msg):
+        spam_available = False
+        for word in spam:
+            if word in msg.lower():
+                spam_available = True
+        return spam_available
 
 if __name__ == "__main__":
     xmpp = EchoBot(user, password)
