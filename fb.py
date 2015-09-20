@@ -30,7 +30,7 @@ class EchoBot(sleekxmpp.ClientXMPP):
         str_from = str(msg['from'])
         str_body = str(msg['body'])
 
-        if msg['from'] in dont_send:
+        if str_from in dont_send:
             return
 
         if str_body not in sessions:
@@ -39,7 +39,7 @@ class EchoBot(sleekxmpp.ClientXMPP):
         msg_back = str(sessions[str_from].ask(str_body))
 
         self.send_message(
-            mto=msg['from'],
+            mto=str_from,
             mbody=msg_back)
 
 if __name__ == "__main__":
