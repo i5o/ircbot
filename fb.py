@@ -42,6 +42,8 @@ class EchoBot(sleekxmpp.ClientXMPP):
             sessions[str_from] = cleverbot.Cleverbot()
 
         msg_back = str(sessions[str_from].ask(str_body))
+        while "Clever" in msg_back:
+            msg_back = str(sessions[str_from].ask(str_body))
 
         self.send_message(
             mto=str_from,
