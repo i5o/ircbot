@@ -12,7 +12,7 @@ user = sys.argv[1] + "@chat.facebook.com"
 password = sys.argv[2]
 sessions = {}
 dont_send = []
-only_send = ["-100002319169411@chat.facebook.com"]
+only_send = []
 spam = ["ios", "app!", "clever", "free"]
 
 
